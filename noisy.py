@@ -26,6 +26,17 @@ class Crawler(object):
         Raised when the specified timeout is exceeded
         """
         pass
+    def get_tor_session():
+        session = requests.session()
+        session.proxies = {'http':  'socks5://127.0.0.1:9050',
+                'https': 'socks5://127.0.0.1:9050'}
+        return session
+
+    session = get_tor_session()
+    #check if Tor connection is working:
+    print("Your Tor node IP is: (this should be different than the IP below, unless you are using Whonix: )" + session.get('http://httpbin.org/ip').text)
+
+    print("Your pubilc IP: " + requests.get('http://httpbin.org/ip').text)
 
     def _request(self, url):
         """
