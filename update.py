@@ -10,17 +10,24 @@ safari = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-ag
 edge = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/edge", headers=headers)
 opera = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/opera", headers=headers)
 
-soup = bs(html.text, "lxml")
+soup1 = bs(chrome.text, "lxml")
+soup2 = bs(ff.text, "lxml")
+soup3 = bs(safari.text, "lxml")
+soup4 = bs(edge.text, "lxml")
+soup5 = bs(opera.text, "lxml")
+
+soups = [soup1, soup2, soup3, soup4, soup5]
 
 def uasw():
-    for ua in soup.select(".code"):
-        with open('config.json', 'r+') as c:
-            for line in c:
-                if line.contains('user_agents'):
-                    lines[i] = lines[i].strip() + c.write("\"{ua}\",\n\"{ua}\"")
-            c.seek(0)
-            for line in lines:
-                c.write(line)
+    for s in soups:
+        for ua in s.select(".code"):
+            with open('config.json', 'r+') as c:
+                for line in c:
+                    if line.contains('user_agents'):
+                        lines[i] = lines[i].strip() + c.write("\"{ua}\",\n\"{ua}\"")
+                c.seek(0)
+                for line in lines:
+                    c.write(line)
     
 uasw.chrome()
 uasw.ff()
