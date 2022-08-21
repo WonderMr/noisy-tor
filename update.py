@@ -23,14 +23,10 @@ def uasw():
         for ua in s.select(".code"):
             with open('config.json', 'r+') as c:
                 for line in c:
-                    if line.contains('user_agents'):
-                        lines[i] = lines[i].strip() + c.write("\"{ua}\",\n\"{ua}\"")
+                    if line.startswith('\t\"user_agents\": [\n\t\t'):
+                        c[i] = c[i].strip() + c.write("\"{ua}\",\n\"{ua}\"")
                 c.seek(0)
-                for line in lines:
+                for line in c:
                     c.write(line)
     
-uasw(chrome)
-uasw(ff)
-uasw(safari)
-uasw(edge)
-uasw(opera)
+uasw()
