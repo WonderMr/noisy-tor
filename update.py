@@ -17,7 +17,7 @@ soup4 = bs(edge.text, "lxml")
 soup5 = bs(opera.text, "lxml")
 
 soups = [soup1, soup2, soup3, soup4, soup5]
-
+#user agent scraper/writer
 def uasw():
     for s in soups:
         for ua in s.select(".code"):
@@ -29,8 +29,8 @@ def uasw():
                 for line in lines:
                     c.write(line)
     
-uasw.chrome()
-uasw.ff()
-uasw.safari()
-uasw.edge()
-uasw.opera()
+uasw(chrome)
+uasw(ff)
+uasw(safari)
+uasw(edge)
+uasw(opera)
