@@ -17,17 +17,23 @@ Install `requests` if you do not have it already installed, using `pip`:
 ```
 pip install requests
 ```
+Also, to be able to automatically update the user agents in config.json using the update.py script, you'll need the libs necessary for web scraping:
+
+```
+pip install lxml beautifulsoup4
+```
+
 
 ### Usage
 
 Clone the repository
 ```
-git clone https://github.com/1tayH/noisy.git
+git clone https://github.com/154pinkchairs/noisy-tor.git
 ```
 
 Navigate into the `noisy` directory
 ```
-cd noisy
+cd noisy-tor
 ```
 
 Run the script
