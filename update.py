@@ -1,4 +1,3 @@
-from selectors import EpollSelector
 import requests
 import lxml
 import os
