@@ -10,23 +10,36 @@ safari = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-ag
 edge = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/edge", headers=headers)
 opera = requests.get("https://www.whatismybrowser.com/guides/the-latest-user-agent/opera", headers=headers)
 
+#create a beautiful soup object for each of the variables above. The user agent is contained in the .code class
 soup1 = bs(chrome.text, "lxml")
 soup2 = bs(ff.text, "lxml")
 soup3 = bs(safari.text, "lxml")
 soup4 = bs(edge.text, "lxml")
 soup5 = bs(opera.text, "lxml")
 
-soups = [soup1, soup2, soup3, soup4, soup5]
-#user agent scraper/writer
-def uasw():
-    for s in soups:
-        for ua in s.select(".code"):
-            with open('config.json', 'r+') as c:
-                for line in c:
-                    if line.startswith('\t\"user_agents\": [\n\t\t'):
-                        c[i] = c[i].strip() + c.write("\"{ua}\",\n\"{ua}\"")
-                c.seek(0)
-                for line in c:
-                    c.write(line)
-    
-uasw()
+
+
+#create a user agent scraper for chrome, firefox, safari, edge, opera using beautiful soup
+#user agent is  a single line of text contained in the .code class
+#use the getattr function to get the user agent for each browser
+#each class contains a string with the user agent, e.g. Mozilla
+def scrape_ua(soup):
+    for line in soup.find_all("div", class_="code"):
+        return line.text
+
+#write the user agent to config.json, to the user_agents array
+
+
+#write the user agent to config.json, to the user_agents array
+def write_ua():
+    with open("config.json", "r") as config:
+        data = config.read()
+        data = data.replace("chrome_ua", chrome_ua())
+        data = data.replace("ff_ua", ff_ua())
+        data = data.replace("safari_ua", safari_ua())
+        data = data.replace("edge_ua", edge_ua())
+        data = data.replace("opera_ua", opera_ua())
+        with open("config.json", "w") as config:
+            config.write(data)
+
+write_ua()
