@@ -99,11 +99,11 @@ with open("temp.txt", "r") as temp:
 with open("config.json", "r") as config:
     config = config.read()
     if config.find("user_agents") != -1:
-        config = str(config.replace("user_agents: []", "user_agents: " + ua_list))
-        config = str(config.replace(",]", "]"))
-        with open("config.json", "w") as config:
-            config.write(config)
-            config.close()
+        conf = config.replace("user_agents: []", "user_agents: " + ua_list)
+        conf = str(config.replace(",]", "]"))
+        with open("config.json", "w") as cfg:
+            cfg.write(conf)
+            cfg.close()
 os.system("rm temp.txt")
 print("Done!")
 
