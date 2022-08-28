@@ -1,7 +1,7 @@
-FROM python:2.7-alpine
+FROM python:3.10.0a6-alpine3.13
 WORKDIR /
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . /
-ENTRYPOINT ["python", "noisy.py"]
+ENTRYPOINT ["python", "noisy.py", "update.py"]
 CMD ["--config", "config.json"]
