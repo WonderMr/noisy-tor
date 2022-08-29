@@ -6,11 +6,10 @@ import random
 import re
 import sys
 import time
-
+from python_socks.sync import Proxy
 import requests
 from urllib3.exceptions import LocationParseError
-
-    from urlparse import urljoin, urlparse
+from urllib.parse import urlparse, urljoin
 
 class Crawler(object):
     def __init__(self):
