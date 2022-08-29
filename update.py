@@ -7,12 +7,11 @@ print ("Removing old user agents...")
 #empty the contents of user_agents array in config.json if not empty
 def rmold():
     with open("config.json", "r") as config:
-        config = config.read()
-        if config.find("user_agents") != -1:
-            config = config.replace("user_agents: []", "user_agents: []")
-            with open("config.json", "w") as config:
-                config.write(config)
-                config.close()
+        conf_old = config.read()
+        if conf_old.find("user_agents") != -1:
+            os.system("chmod +x update-helper.sh && ./update-helper.sh -c") 
+            print ("Old user agents removed.")
+            config.close()
         else:
             print("You seem to be running this script for the first time.\n")
 rmold()
@@ -52,7 +51,7 @@ def process_ua(user_agents):
 user_agents = scrape_uas()
 
 def exportandclean():
-    with open("temp.txt", "w") as temp:
+    with open("temp.txt", "r+") as temp:
         chrome_uas, ff_uas, safari_uas, edge_uas, opera_uas = scrape_uas()
         chrome_uas = process_ua(chrome_uas)
         ff_uas = process_ua(ff_uas)
@@ -74,7 +73,11 @@ def exportandclean():
         for opera_ua in opera_uas:
             for opera_ua_ in opera_ua:
                 temp.write(opera_ua_ + "\n")
-        temp.close()
+        temp.close
+        #append quotation marks to lines beginning with "Mozilla" and ones that end with a number. Use sed
+        os.system("chmod +x update-helper.sh && ./update-helper.sh -q")
+
+
 exportandclean()
 
 print("Cleaning things up...")
@@ -82,15 +85,6 @@ print("Cleaning things up...")
 os.system("sed -i 's/<span class=\"code\">//g' temp.txt")
 os.system("sed -i 's/<\/span>//g' temp.txt")
 
-# write the contents of temp.txt to user_agents array. If a line begins with Mozilla, we need to prepend it with a quotation mark and remove the newline character and append a quotation mark and a comma at the end.
-with open("temp.txt", "r") as temp:
-    user_agents = temp.readlines()
-    for i in range(len(user_agents)):
-        if user_agents[i].startswith("Mozilla"):
-            user_agents[i] = '"' + user_agents[i].rstrip("\n") + '",'
-        else:
-            user_agents[i] = user_agents[i].rstrip("\n") + ","
-    temp.close()
 # create a ua_list variable from the contents of temp.txt
 with open("temp.txt", "r") as temp:
     ua_list = temp.read()
@@ -104,6 +98,6 @@ with open("config.json", "r") as config:
         with open("config.json", "w") as cfg:
             cfg.write(conf)
             cfg.close()
-os.system("rm temp.txt")
+#os.system("rm temp.txt")
 print("Done!")
 
