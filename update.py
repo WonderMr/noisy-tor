@@ -73,7 +73,7 @@ def exportandclean():
         for opera_ua in opera_uas:
             for opera_ua_ in opera_ua:
                 temp.write(opera_ua_ + "\n")
-        temp.close
+        temp.close()
         #append quotation marks to lines beginning with "Mozilla" and ones that end with a number. Use sed
         os.system("chmod +x update-helper.sh && ./update-helper.sh -q")
 
