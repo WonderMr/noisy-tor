@@ -2,6 +2,7 @@ import argparse
 import datetime
 import json
 import logging
+import os
 import random
 import re
 import sys
@@ -10,6 +11,15 @@ from python_socks.sync import Proxy
 import requests
 from urllib3.exceptions import LocationParseError
 from urllib.parse import urlparse, urljoin
+
+#Initial check: exit if config.json is not found or empty
+def precheck():
+    if not os.path.exists('config.json'):
+        print('config.json not found')
+        exit(1)
+    if os.stat('config.json').st_size == 0:
+        print('config.json is empty')
+        exit(1)
 
 class Crawler(object):
     def __init__(self):
