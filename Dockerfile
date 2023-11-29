@@ -3,5 +3,6 @@ WORKDIR /
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . /
-ENTRYPOINT ["python", "noisy.py", "update.py"]
+ENTRYPOINT ["python", "update.py"]
+ENTRYPOINT ["python", "noisy.py"]
 CMD ["--config", "config.json"]

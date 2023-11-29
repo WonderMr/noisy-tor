@@ -37,15 +37,24 @@ class Crawler(object):
         pass
     def get_tor_session():
         session = requests.session()
-        session.proxies = {'http':  'socks5://127.0.0.1:9050',
-                'https': 'socks5://127.0.0.1:9050'}
+        session.proxies = { 'http' : 'socks5://127.0.0.1:9050',
+                            'https': 'socks5://127.0.0.1:9050'}
         return session
 
     session = get_tor_session()
-    #check if Tor connection is working:
-    print("Your Tor node IP is: (this should be different than the IP below, unless you are using Whonix: )" + session.get('http://httpbin.org/ip').text)
+    try:
+        ip_response = session.get('http://httpbin.org/ip')
+        tor_ip = ip_response.text
+        print("Your Tor node IP is: (this should be different than the IP below, unless you are using Whonix: )" + tor_ip)
+    except Exception as e:
+        print("Unable to connect to Tor proxy: " + str(e))
 
-    print("Your pubilc IP: " + requests.get('http://httpbin.org/ip').text)
+    try:
+        ip_response = requests.get('http://httpbin.org/ip')
+        print("Your pubilc IP: " + ip_response.text)
+    except Exception as e:
+        print("Unable to connect to httpbin.org: " + str(e))
+        sys.exit(1)
 
     def _request(self, url):
         """
